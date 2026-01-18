@@ -1,0 +1,1 @@
+/target/aarch64-unknown-linux-musl/release/nexus_singularity: /project/index.html /project/src/action_handler.rs /project/src/agents.rs /project/src/brain.rs /project/src/init_files.rs /project/src/key_loader.rs /project/src/main.rs /project/src/server.rs
