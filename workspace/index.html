@@ -1,0 +1,179 @@
+` to save it.
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NEXUS IDE</title>
+    <link rel="stylesheet" href="theme.css">
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #000;
+            color: #0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        #container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #0f0;
+        }
+
+        #stats {
+            margin-bottom: 20px;
+        }
+
+        #command-deck {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>NEXUS IDE</h1>
+
+        <div id="stats">
+            CPU: <span id="cpu">Loading...</span><br>
+            Storage: <span id="storage">Loading...</span>
+        </div>
+
+        <div id="command-deck">
+            <input type="text" id="cmd" placeholder="Enter System Command...">
+            <button onclick="runCmd()">EXECUTE</button>
+            <pre id="output"></pre>
+        </div>
+    </div>
+
+    <script>
+        function fetchStats() {
+            fetch('/api/stats')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('cpu').innerText = data.cpu + '%';
+                    document.getElementById('storage').innerText = data.storage + '%';
+                })
+                .catch(error => {
+                    console.error('Error fetching stats:', error);
+                    document.getElementById('cpu').innerText = 'Error';
+                    document.getElementById('storage').innerText = 'Error';
+                });
+        }
+
+        function runCmd() {
+            const cmd = document.getElementById('cmd').value;
+            fetch('/api/exec', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ command: cmd })
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('output').innerText = data;
+            })
+            .catch(error => {
+                console.error('Error executing command:', error);
+                document.getElementById('output').innerText = 'Error executing command.';
+            });
+        }
+
+        // Fetch stats every 1 second
+        setInterval(fetchStats, 1000);
+    </script>
+</body>
+</html>
+```
+
+Now, I'll save this to `index.html`.
+
+```
+[SAVE: index.html]
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NEXUS IDE</title>
+    <link rel="stylesheet" href="theme.css">
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #000;
+            color: #0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        #container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #0f0;
+        }
+
+        #stats {
+            margin-bottom: 20px;
+        }
+
+        #command-deck {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>NEXUS IDE</h1>
+
+        <div id="stats">
+            CPU: <span id="cpu">Loading...</span><br>
+            Storage: <span id="storage">Loading...</span>
+        </div>
+
+        <div id="command-deck">
+            <input type="text" id="cmd" placeholder="Enter System Command...">
+            <button onclick="runCmd()">EXECUTE</button>
+            <pre id="output"></pre>
+        </div>
+    </div>
+
+    <script>
+        function fetchStats() {
+            fetch('/api/stats')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('cpu').innerText = data.cpu + '%';
+                    document.getElementById('storage').innerText = data.storage + '%';
+                })
+                .catch(error => {
+                    console.error('Error fetching stats:', error);
+                    document.getElementById('cpu').innerText = 'Error';
+                    document.getElementById('storage').innerText = 'Error';
+                });
+        }
+
+        function runCmd() {
+            const cmd = document.getElementById('cmd').value;
+            fetch('/api/exec', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ command: cmd })
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('output').innerText = data;
+            })
+            .catch(error => {
+                console.error('Error executing command:', error);
+                document.getElementById('output').innerText = 'Error executing command.';
+            });
+        }
+
+        // Fetch stats every 1 second
+        setInterval(fetchStats, 1000);
+    </script>
+</body>
+</html>

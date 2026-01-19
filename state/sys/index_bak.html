@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>NEXUS OS</title>
+    <style>
+        :root { --neon: #00ff41; --bg: #050505; --text: #e0e0e0; --thought: #0077ff; --warn: #ffcc00; }
+        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', monospace; margin: 0; height: 100dvh; display: flex; flex-direction: column; padding-top: env(safe-area-inset-top); }
+        
+        /* 📊 System HUD */
+        #system-hud { background: rgba(0,255,65,0.05); color: var(--neon); font-size: 11px; padding: 10px; text-align: center; border-bottom: 1px solid #222; letter-spacing: 1px; }
+        
+        /* 🧠 Thought Indicator */
+        #thought-panel { background: rgba(0,119,255,0.1); color: var(--thought); font-size: 10px; padding: 6px; border-bottom: 1px solid #113; display: none; text-align: center; }
+
+        #chat-history { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; }
+
+        /* 🤖 Action Cards */
+        .msg { padding: 15px; border-radius: 8px; font-size: 14px; background: #111; border-left: 4px solid var(--neon); line-height: 1.5; }
+        .action-card { background: #1a1a1a; border: 1px solid #333; border-radius: 6px; margin-top: 10px; overflow: hidden; }
+        .action-header { background: #222; padding: 5px 10px; font-size: 11px; font-weight: bold; color: var(--warn); border-bottom: 1px solid #333; }
+        .action-body { padding: 10px; font-family: 'Courier New', monospace; font-size: 13px; color: #fff; background: #000; overflow-x: auto; }
+
+        #input-area { background: #000; display: flex; padding: 15px; gap: 12px; border-top: 1px solid #222; align-items: center; }
+        #prompt { flex: 1; background: #151515; border: 1px solid #333; color: #fff; padding: 12px; border-radius: 6px; font-size: 15px; outline: none; }
+        #prompt:focus { border-color: var(--neon); }
+        #stop-btn { background:#300; color:#f00; border:1px solid #600; padding:10px 15px; border-radius:4px; font-size:11px; font-weight:bold; cursor:pointer; }
+    </style>
+</head>
+<body>
+    <div id="system-hud">NEXUS NODE STATUS: OPERATIONAL</div>
+    <div id="thought-panel">COGNITIVE TRACE ACTIVE: <span id="sig-content"></span></div>
+    <div id="chat-history"></div>
+    <div id="input-area">
+        <button id="stop-btn">HALT</button>
+        <input type="text" id="prompt" placeholder="Enter System Command..." autocomplete="off">
+    </div>
+
+    <script>
+        const $ = id => document.getElementById(id);
+        
+        new EventSource('/stats').onmessage = (e) => { 
+            if(e.data.includes("CPU:")) $('system-hud').innerText = `SYSTEM HEALTH: ${e.data}`; 
+        };
+        
+        $('stop-btn').onclick = async () => { 
+            await fetch('/kill', {method:'POST'}); 
+            $('system-hud').innerText = "MONITOR HALTED"; 
+        };
+
+        function renderAction(actionObj) {
+            const card = document.createElement('div');
+            card.className = 'action-card';
+            const type = actionObj.action || "TASK";
+            const detail = actionObj.cmd || actionObj.path || "";
+            const content = actionObj.content ? `<div class="action-body" style="color:#00ff41">${actionObj.content}</div>` : "";
+
+            card.innerHTML = `
+                <div class="action-header">⚡ SYSTEM ${type}: ${detail}</div>
+                ${content ? content : `<div class="action-body">${detail}</div>`}
+            `;
+            return card;
+        }
+
+        $('prompt').onkeypress = async (e) => {
+            if(e.key !== 'Enter') return;
+            const query = e.target.value; e.target.value = "";
+            const box = document.createElement('div'); box.className = 'msg';
+            box.innerText = "> " + query + "\n\n";
+            $('chat-history').appendChild(box);
+            $('thought-panel').style.display = 'block';
+
+            const res = await fetch('/ask', { 
+                method: 'POST', 
+                headers: {'Content-Type': 'application/json'}, 
+                body: JSON.stringify({ prompt: query }) 
+            });
+
+            const reader = res.body.getReader(); 
+            const decoder = new TextDecoder();
+            let accumulated = "";
+            
+            while(true) {
+                const {done, value} = await reader.read(); if(done) break;
+                decoder.decode(value).split('\n').forEach(line => {
+                    if(line.startsWith('data: ')) {
+                        try {
+                            const json = JSON.parse(line.substring(6));
+                            const part = json.candidates[0].content.parts[0];
+                            
+                            if (part.thoughtSignature) {
+                                $('sig-content').innerText = "[Encrypted Reasoning Chain]";
+                            }
+
+                            if (part.text) {
+                                // Check if the text is a JSON action
+                                try {
+                                    const actionData = JSON.parse(part.text);
+                                    if (Array.isArray(actionData)) {
+                                        actionData.forEach(act => box.appendChild(renderAction(act)));
+                                    } else {
+                                        box.appendChild(renderAction(actionData));
+                                    }
+                                } catch(e) {
+                                    // Regular text
+                                    box.innerText += part.text;
+                                }
+                            }
+                        } catch(err) { }
+                        $('chat-history').scrollTop = $('chat-history').scrollHeight;
+                    }
+                });
+            }
+        };
+    </script>
+<div id="terminal-out" style="background:#000;color:#0f0;font-size:10px;padding:10px;height:100px;overflow-y:auto;border-top:2px solid #333;font-family:monospace;">[SYSTEM CONSOLE READY]</div>
+</body>
+</html>

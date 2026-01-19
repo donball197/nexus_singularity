@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NEXUS MOBILE</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root { --bg: #050505; --surface: #0a0a0a; --primary: #00ff9d; --alert: #ff0055; --cyan: #00e5ff; --text: #e0e0e0; --mono: 'Courier New', monospace; }
+        body { background: var(--bg); color: var(--text); font-family: var(--mono); margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+        
+        #chat { flex: 1; overflow-y: auto; padding: 15px; padding-bottom: 90px; display: flex; flex-direction: column; gap: 15px; }
+        
+        /* Message Bubbles */
+        .msg { max-width: 90%; font-size: 13px; line-height: 1.5; word-wrap: break-word; }
+        .msg.ai { align-self: flex-start; border-left: 3px solid var(--primary); padding: 10px; background: rgba(0,255,157,0.05); border-radius: 0 10px 10px 0; }
+        .msg.user { align-self: flex-end; background: #222; padding: 10px 15px; border-radius: 15px 15px 0 15px; color: #fff; border: 1px solid #333; }
+        
+        /* PROPOSAL CARD (RED BOX) */
+        .proposal-card { border: 1px solid var(--alert); background: rgba(255,0,85,0.05); border-radius: 6px; margin-top: 5px; overflow: hidden; font-size: 12px; max-width: 100%; }
+        .proposal-header { background: rgba(255,0,85,0.1); color: var(--alert); padding: 6px 10px; font-weight: bold; font-size: 10px; letter-spacing: 1px; }
+        .proposal-body { padding: 10px; color: #fff; }
+        .cmd-preview { background: #000; padding: 8px; border: 1px solid #333; color: var(--cyan); font-family: monospace; margin-bottom: 10px; white-space: pre-wrap; }
+        .btn-exec { background: var(--primary); color: #000; border: none; padding: 10px; width: 100%; font-weight: bold; cursor: pointer; letter-spacing: 1px; }
+        .btn-exec:active { background: #fff; }
+
+        /* INPUT AREA */
+        #input-area { position: fixed; bottom: 0; left: 0; right: 0; background: #000; padding: 10px 15px; display: flex; gap: 10px; border-top: 1px solid #222; align-items: center; }
+        input { flex: 1; background: #111; border: 1px solid #333; color: #fff; padding: 12px; border-radius: 4px; outline: none; font-family: sans-serif; font-size: 16px; }
+        input:focus { border-color: var(--primary); }
+        
+        .fab { width: 40px; height: 40px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .fab.cyan { background: var(--cyan); color: #000; box-shadow: 0 0 10px rgba(0,229,255,0.3); }
+        .fab.send { background: var(--primary); color: #000; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div id="chat">
+        <div class="msg ai">
+            NEXUS MOBILE ONLINE.<br>
+            System ready. Awaiting directives.
+        </div>
+    </div>
+
+    <form id="form">
+        <div id="input-area">
+            <button type="button" class="fab cyan">
+                <span class="material-icons">edit</span>
+            </button>
+            <input type="text" id="prompt" placeholder="Command..." autocomplete="off">
+            <button type="submit" class="fab send">
+                <span class="material-icons">arrow_forward</span>
+            </button>
+        </div>
+    </form>
+
+    <script>
+        const chat = document.getElementById('chat');
+        const promptInput = document.getElementById('prompt');
+        const scrollToBottom = () => window.scrollTo(0, document.body.scrollHeight);
+
+        const log = (text, type) => {
+            const div = document.createElement('div');
+            div.className = `msg ${type}`;
+            div.innerHTML = text.replace(/\n/g, '<br>');
+            chat.appendChild(div);
+            scrollToBottom();
+            return div;
+        };
+
+        const createProposal = (action) => {
+            const card = document.createElement('div');
+            card.className = 'proposal-card';
+            
+            const title = action.action === "RUN" ? "EXECUTION PROPOSAL" : "FILE WRITE PROPOSAL";
+            const content = action.action === "RUN" ? action.cmd : `Save to: ${action.path}\n\n${action.content.substring(0, 50)}...`;
+
+            card.innerHTML = `
+                <div class="proposal-header">${title}</div>
+                <div class="proposal-body">
+                    <div class="cmd-preview">${content}</div>
+                    <button class="btn-exec">AUTHORIZE</button>
+                </div>
+            `;
+            
+            const btn = card.querySelector('.btn-exec');
+            btn.onclick = async () => {
+                btn.innerText = "EXECUTING...";
+                btn.style.background = "#fff";
+                
+                try {
+                    let res;
+                    if (action.action === "RUN") {
+                        res = await fetch('/execute', {
+                            method: 'POST',
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify({ cmd: action.cmd })
+                        });
+                    }
+                    
+                    const out = await res.json();
+                    
+                    const outputDiv = document.createElement('div');
+                    outputDiv.className = 'msg ai';
+                    outputDiv.style.borderLeftColor = out.success ? '#0f0' : '#f00';
+                    outputDiv.innerHTML = `<strong>RESULT:</strong><br><pre>${out.stdout || out.stderr || "Done."}</pre>`;
+                    chat.appendChild(outputDiv);
+                    
+                    btn.innerText = "COMPLETED";
+                    btn.disabled = true;
+                    scrollToBottom();
+                    
+                } catch (e) {
+                    btn.innerText = "FAILED";
+                    btn.style.background = "var(--alert)";
+                }
+            };
+
+            chat.appendChild(card);
+            scrollToBottom();
+        };
+
+        document.getElementById('form').onsubmit = async (e) => {
+            e.preventDefault();
+            const txt = promptInput.value;
+            if(!txt) return;
+            promptInput.value = '';
+
+            log(txt, 'user');
+            const aiMsg = log("Thinking...", 'ai');
+            let fullText = "";
+
+            try {
+                const res = await fetch('/ask', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ prompt: txt })
+                });
+
+                const reader = res.body.getReader();
+                const decoder = new TextDecoder();
+                aiMsg.innerHTML = ""; 
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+                    
+                    const chunk = decoder.decode(value, { stream: true });
+                    const lines = chunk.split('\n');
+                    
+                    for (const line of lines) {
+                        if (line.startsWith("data: ")) {
+                            const data = line.replace("data: ", "");
+                            fullText += data;
+                            aiMsg.innerHTML = fullText.replace(/\n/g, "<br>");
+                            scrollToBottom();
+                        }
+                    }
+                }
+
+                // Check for JSON commands
+                const jsonMatch = fullText.match(/\[\s*\{.*\}\s*\]/s);
+                if (jsonMatch) {
+                    try {
+                        const actions = JSON.parse(jsonMatch[0]);
+                        // Remove JSON from text bubble
+                        aiMsg.innerHTML = fullText.replace(jsonMatch[0], "").replace(/\n/g, "<br>");
+                        // Render Red Card
+                        actions.forEach(act => createProposal(act));
+                    } catch (e) { }
+                }
+
+            } catch (err) {
+                aiMsg.innerText = "[CONNECTION LOST]";
+            }
+        };
+    </script>
+</body>
+</html>

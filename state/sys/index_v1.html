@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>NEXUS OS // PHASE 5</title>
+    <style>
+        :root { --neon: #ff00ff; --bg: #020202; --text: #e0e0e0; --thought: #0077ff; --warn: #ffcc00; }
+        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', monospace; margin: 0; height: 100dvh; display: flex; flex-direction: column; padding-top: env(safe-area-inset-top); }
+        #system-hud { background: rgba(255,0,255,0.1); color: var(--neon); font-size: 11px; padding: 10px; text-align: center; border-bottom: 1px solid #303; letter-spacing: 2px; font-weight: bold; }
+        #thought-panel { background: rgba(0,119,255,0.1); color: var(--thought); font-size: 10px; padding: 6px; border-bottom: 1px solid #113; display: none; text-align: center; }
+        #chat-history { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; }
+        .msg { padding: 15px; border-radius: 8px; font-size: 14px; background: #0a0a0a; border-left: 4px solid var(--neon); line-height: 1.5; box-shadow: 0 0 10px rgba(255,0,255,0.1); }
+        .action-card { background: #1a1a1a; border: 1px solid #404; border-radius: 6px; margin-top: 10px; }
+        .action-header { background: #2a002a; padding: 5px 10px; font-size: 11px; font-weight: bold; color: var(--neon); border-bottom: 1px solid #404; }
+        #input-area { background: #000; display: flex; padding: 15px; gap: 12px; border-top: 1px solid #303; }
+        #prompt { flex: 1; background: #0a0a0a; border: 1px solid #444; color: #fff; padding: 12px; border-radius: 6px; font-size: 15px; outline: none; }
+        #prompt:focus { border-color: var(--neon); box-shadow: 0 0 5px var(--neon); }
+        #stop-btn { background:#300; color:#f00; border:1px solid #600; padding:10px; border-radius:4px; font-size:11px; cursor:pointer; }
+        #clear-btn { background:#111; color:#777; border:1px solid #333; padding:10px; border-radius:4px; font-size:11px; cursor:pointer; }
+        #terminal-out { background:#000; color:#ff00ff; font-size: 10px; padding:10px; height:80px; overflow-y:auto; border-top:2px solid #303; font-family:monospace; }
+    </style>
+</head>
+<body>
+    <div id="system-hud">NEXUS SOVEREIGN NODE // [IDENTITY: 06_SOVEREIGN]</div>
+    <div id="thought-panel">COGNITIVE TRACE DETECTED...</div>
+    <div id="chat-history"></div>
+    <div id="terminal-out">[CONSOLE_INITIALIZED_PHASE_5]</div>
+    <div id="input-area">
+        <button id="stop-btn">HALT</button>
+        <button id="clear-btn" onclick="document.getElementById('terminal-out').innerText=''">CLEAR</button>
+        <input type="text" id="prompt" placeholder="Sovereign Directive..." autocomplete="off">
+    </div>
+    <script>
+        // ... (The rest of your script logic stays the same)
+    </script>
+</body>
+</html>

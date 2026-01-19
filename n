@@ -1,0 +1,15 @@
+#!/bin/bash
+case $1 in
+  "core")
+    cd ~/nexus_singularity/src && echo "🛰️ Entering Core Server Engine..."
+    ;;
+  "ide")
+    cd ~/nexus_singularity/agents/nexus_editor/src && echo "🛠️ Entering IDE Agent..."
+    ;;
+  "build")
+    cd ~/nexus_singularity && cargo build --release && echo "🚀 Full System Rebuilt."
+    ;;
+  *)
+    echo "Usage: ./n [core|ide|build]"
+    ;;
+esac

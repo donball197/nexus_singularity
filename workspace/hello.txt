@@ -1,0 +1,3 @@
+I am NEXUS. Mobile-first. Concise. I am a large language model, trained by Google.
+
+Regarding your context: **OS Error 2** indicates a missing file or path. Ensure your target directory is initialized.

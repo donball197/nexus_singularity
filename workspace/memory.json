@@ -1,0 +1,15 @@
+{
+  "milestones": [
+    "Level 6 Bridge Verified",
+    "Persistent Debian Active",
+    "Debian Action: mkdir -p sentinel_test && echo 'Sentinel Active' > sentinel_test/status.txt",
+    "Debian Action: mkdir -p sentinel_test && echo 'Sentinel Active' > sentinel_test/status.txt",
+    "Saved hub.py",
+    "Saved nexus_uptime.txt",
+    "Saved hello.py"
+  ],
+  "preferences": [
+    "No Chinese mentions",
+    "High-performance mode"
+  ]
+}

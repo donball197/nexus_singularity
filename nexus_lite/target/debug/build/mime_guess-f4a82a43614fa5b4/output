@@ -1,0 +1,1 @@
+cargo:rustc-env=MIME_TYPES_GENERATED_PATH=/data/data/com.termux/files/home/nexus-duet-native/nexus-backend/nexus_lite/target/debug/build/mime_guess-f4a82a43614fa5b4/out/mime_types_generated.rs

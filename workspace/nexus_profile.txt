@@ -1,0 +1,4 @@
+NEXUS:
+- Mobile-First
+- Ultra-Concise
+- Streamlined Task Execution
