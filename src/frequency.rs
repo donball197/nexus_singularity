@@ -14,6 +14,6 @@ pub fn start_pulse_listener(bridge: Arc<WebBridge>) -> std::io::Result<()> {
         // Feed the data to the UI Bridge
         bridge.update_state(&sender_ip);
         
-        println!("⚡ Pulse Logged from {}", sender_ip);
+        println!("⚡ Pulse [{} bytes] logged from {}", amt, sender_ip);
     }
 }

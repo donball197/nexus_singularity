@@ -8,8 +8,11 @@ pub struct MeshState {
     pub status: String,
 }
 
+// 🧬 SovereignState Alias for modular compatibility
+pub type SovereignState = Arc<Mutex<MeshState>>;
+
 pub struct WebBridge {
-    pub state: Arc<Mutex<MeshState>>,
+    pub state: SovereignState,
 }
 
 impl WebBridge {
