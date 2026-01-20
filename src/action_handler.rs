@@ -1,6 +1,6 @@
 use std::process::Command;
 use std::sync::Arc;
-use crate::SovereignState;
+use crate::web_bridge::SovereignState;
 
 pub async fn execute_directive(_state: Arc<SovereignState>, cmd_string: String) -> String {
     let output = if cfg!(target_os = "android") {

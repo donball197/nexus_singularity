@@ -1,1 +1,1 @@
-/data/data/com.termux/files/home/nexus_master/DOCS/LEDGER.md
+/root/nexus_master/DOCS/LEDGER.md

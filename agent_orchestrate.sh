@@ -1,1 +1,1 @@
-/data/data/com.termux/files/home/nexus_master/manifest.sh
+/root/nexus_master/manifest.sh

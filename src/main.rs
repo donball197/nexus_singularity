@@ -1,11 +1,14 @@
+mod interface;
+mod network;
 mod frequency;
 mod action_handler;
-mod web_bridge;
+pub mod web_bridge;
 mod action_listener;
 
 use axum::{extract::State, routing::get, Json, Router};
 use std::sync::Arc;
 use web_bridge::WebBridge;
+use tokio::net::TcpListener;
 
 #[tokio::main]
 async fn main() -> std::io::Result<()> {
@@ -35,7 +38,12 @@ async fn main() -> std::io::Result<()> {
         .with_state(bridge_for_web);
 
     let addr = "0.0.0.0:8080";
-    let listener = tokio::net::TcpListener::bind(addr).await?;
+    
+    // 🏛️ Sovereign Bridge: Convert std::net to tokio::net
+    let std_listener = crate::network::oracle::create_listener(addr).expect("Failed to bind port");
+    std_listener.set_nonblocking(true)?;
+    let listener = TcpListener::from_std(std_listener)?;
+    
     println!("🏛️ Web Bridge API LIVE at http://localhost:8080");
 
     axum::serve(listener, app).await
@@ -50,4 +58,12 @@ async fn get_mesh_status(State(bridge): State<Arc<WebBridge>>) -> Json<serde_jso
         "status": state.status,
         "version": "V0.3.9"
     }))
+}
+
+fn start_ui_thread() {
+    std::thread::spawn(|| {
+        if let Err(e) = interface::launch_ui() {
+            eprintln!("UI Error: {:?}", e);
+        }
+    });
 }

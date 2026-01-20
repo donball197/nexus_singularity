@@ -1,1 +1,1 @@
-/data/data/com.termux/files/home/nexus_master/dist_agent.py
+/root/nexus_master/dist_agent.py
