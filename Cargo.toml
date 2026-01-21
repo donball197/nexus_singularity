@@ -26,3 +26,10 @@ reqwest = { version = "0.12", features = ["json", "stream"] }
 sysinfo = "0.30"
 chrono = { version = "0.4", features = ["clock"] }
 anyhow = "1.0"
+
+[profile.release]
+opt-level = 3
+debug = false
+codegen-units = 1
+lto = "thin"
+incremental = false
