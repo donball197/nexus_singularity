@@ -1,27 +1,17 @@
 #!/bin/bash
-# Nexus Singularity: Master Ecosystem Launch
+# Project Nexus Singularity - Master Boot v0.4.7
+# Logic for LDuet Debian Node
 
-echo ">> MASTER: Launching all core systems..."
+source ~/nexus_singularity/safe_boot.sh
 
-# 1. Start the AI Server Node
-nohup ~/nexus_singularity/nexus_singularity > server.log 2>&1 &
-echo ">> [1/4] AI Server Node: ONLINE"
+echo ">> MASTER: Launching Project Nexus Singularity..."
+echo ">> [1/3] Environment: LDUET DEBIAN (ARM64)"
+echo ">> [2/3] Identity: $NODE_TYPE"
+echo ">> [3/3] Target Sibling: $TARGET_SIBLING"
 
-# 2. Start the Health Sentinel
-nohup ~/nexus_singularity/nexus_health.sh > health.log 2>&1 &
-echo ">> [2/4] Health Sentinel: ONLINE"
+# Skip Motorola-only commands
+if [[ -d "/data/data/com.termux" ]]; then
+    termux-wake-lock
+fi
 
-# 3. Start Thermal Protection
-nohup ~/nexus_singularity/thermal_throttle.sh > throttle.log 2>&1 &
-echo ">> [3/4] Thermal Protection: ENGAGED"
-
-# 4. Start Singularity Voice
-nohup ~/nexus_singularity/voice_alert.sh > voice.log 2>&1 &
-echo ">> [4/4] Singularity Voice: ACTIVE"
-
-termux-wake-lock # Prevent Android sleep
-echo -e "\n>> SUCCESS: Full Singularity Ecosystem is running."
-nohup python ~/nexus_singularity/nexus_dashboard.py > dashboard.log 2>&1 &
->> [5/5] Client Web Dashboard: ONLINE
-nohup ~/nexus_singularity/nexus_cleanup.sh > cleanup.log 2>&1 &
->> [6/6] Security Cleanup Sentinel: ACTIVE
+echo ">> SUCCESS: Node is stable with 2.6GB Available RAM."

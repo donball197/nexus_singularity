@@ -1,3 +1,4 @@
+mod revenue_monitor;
 mod interface;
 mod network;
 mod frequency;
