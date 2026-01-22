@@ -26,6 +26,7 @@
  * ```
  */
 declare module '$env/static/private' {
+	export const GEMINI_API_KEY: string;
 	export const TARGET_MODEL: string;
 	export const USER: string;
 	export const npm_config_user_agent: string;
@@ -34,6 +35,7 @@ declare module '$env/static/private' {
 	export const npm_node_execpath: string;
 	export const XCURSOR_SIZE: string;
 	export const SHLVL: string;
+	export const LIBGL_ALWAYS_SOFTWARE: string;
 	export const LD_LIBRARY_PATH: string;
 	export const BROWSER: string;
 	export const npm_config_noproxy: string;
@@ -85,6 +87,7 @@ declare module '$env/static/private' {
 	export const DISPLAY_LOW_DENSITY: string;
 	export const LANG: string;
 	export const XDG_CURRENT_DESKTOP: string;
+	export const WEBKIT_DISABLE_COMPOSITING_MODE: string;
 	export const SOMMELIER_VM_IDENTIFIER: string;
 	export const XDG_CONFIG_HOME: string;
 	export const LS_COLORS: string;
@@ -100,14 +103,12 @@ declare module '$env/static/private' {
 	export const PWD: string;
 	export const MALLOC_TRIM_THRESHOLD_: string;
 	export const npm_execpath: string;
-	export const GEMINI_API_KEY: string;
 	export const NVM_CD_FLAGS: string;
 	export const XDG_DATA_DIRS: string;
 	export const npm_config_global_prefix: string;
 	export const TARGET_SIBLING: string;
 	export const npm_command: string;
 	export const MAX_TOKENS: string;
-	export const NVM_RC_VERSION: string;
 	export const GOOGLE_API_KEY: string;
 	export const INIT_CWD: string;
 	export const EDITOR: string;
@@ -141,6 +142,7 @@ declare module '$env/static/public' {
  */
 declare module '$env/dynamic/private' {
 	export const env: {
+		GEMINI_API_KEY: string;
 		TARGET_MODEL: string;
 		USER: string;
 		npm_config_user_agent: string;
@@ -149,6 +151,7 @@ declare module '$env/dynamic/private' {
 		npm_node_execpath: string;
 		XCURSOR_SIZE: string;
 		SHLVL: string;
+		LIBGL_ALWAYS_SOFTWARE: string;
 		LD_LIBRARY_PATH: string;
 		BROWSER: string;
 		npm_config_noproxy: string;
@@ -200,6 +203,7 @@ declare module '$env/dynamic/private' {
 		DISPLAY_LOW_DENSITY: string;
 		LANG: string;
 		XDG_CURRENT_DESKTOP: string;
+		WEBKIT_DISABLE_COMPOSITING_MODE: string;
 		SOMMELIER_VM_IDENTIFIER: string;
 		XDG_CONFIG_HOME: string;
 		LS_COLORS: string;
@@ -215,14 +219,12 @@ declare module '$env/dynamic/private' {
 		PWD: string;
 		MALLOC_TRIM_THRESHOLD_: string;
 		npm_execpath: string;
-		GEMINI_API_KEY: string;
 		NVM_CD_FLAGS: string;
 		XDG_DATA_DIRS: string;
 		npm_config_global_prefix: string;
 		TARGET_SIBLING: string;
 		npm_command: string;
 		MAX_TOKENS: string;
-		NVM_RC_VERSION: string;
 		GOOGLE_API_KEY: string;
 		INIT_CWD: string;
 		EDITOR: string;

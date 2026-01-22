@@ -1,0 +1,2 @@
+import { exec } from 'node:child_process'; import fs from 'node:fs'; console.log('--- STARTING PERSISTENT MONITOR ---'); setInterval(() => { exec('./cpu_mon', (e, out) => { if (e) return; const data = JSON.parse(out); const entry = `${new Date().toISOString()},${data.cpu_load},${data.mem_available_kb}
+`; fs.appendFileSync('stats.csv', entry); console.log('LOGGED:', data); }); }, 5000);

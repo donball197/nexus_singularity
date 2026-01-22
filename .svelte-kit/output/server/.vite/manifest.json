@@ -9,13 +9,6 @@
       "_environment.js"
     ]
   },
-  "_attributes.js": {
-    "file": "chunks/attributes.js",
-    "name": "attributes",
-    "imports": [
-      "_escaping.js"
-    ]
-  },
   "_context.js": {
     "file": "chunks/context.js",
     "name": "context"
@@ -24,13 +17,20 @@
     "file": "chunks/environment.js",
     "name": "environment"
   },
-  "_escaping.js": {
-    "file": "chunks/escaping.js",
-    "name": "escaping"
+  "_equality.js": {
+    "file": "chunks/equality.js",
+    "name": "equality"
   },
   "_exports.js": {
     "file": "chunks/exports.js",
     "name": "exports",
+    "imports": [
+      "_equality.js"
+    ]
+  },
+  "_index.js": {
+    "file": "chunks/index.js",
+    "name": "index",
     "imports": [
       "_context.js"
     ]
@@ -39,9 +39,10 @@
     "file": "chunks/internal.js",
     "name": "internal",
     "imports": [
+      "_index.js",
       "_environment.js",
-      "_context.js",
-      "_attributes.js"
+      "_equality.js",
+      "_context.js"
     ]
   },
   "_shared.js": {
@@ -71,8 +72,8 @@
     "src": "node_modules/@sveltejs/kit/src/runtime/components/svelte-5/error.svelte",
     "isEntry": true,
     "imports": [
-      "_escaping.js",
       "_context.js",
+      "_equality.js",
       "_exports.js",
       "_utils.js"
     ]
@@ -108,11 +109,38 @@
     "src": "src/routes/+page.svelte",
     "isEntry": true,
     "imports": [
-      "_attributes.js",
-      "_escaping.js"
-    ],
-    "css": [
-      "_app/immutable/assets/_page.BDJzmiZF.css"
+      "_index.js",
+      "_context.js"
     ]
+  },
+  "src/routes/api/ask/+server.js": {
+    "file": "entries/endpoints/api/ask/_server.js",
+    "name": "entries/endpoints/api/ask/_server",
+    "src": "src/routes/api/ask/+server.js",
+    "isEntry": true
+  },
+  "src/routes/api/files/+server.js": {
+    "file": "entries/endpoints/api/files/_server.js",
+    "name": "entries/endpoints/api/files/_server",
+    "src": "src/routes/api/files/+server.js",
+    "isEntry": true
+  },
+  "src/routes/api/read/+server.js": {
+    "file": "entries/endpoints/api/read/_server.js",
+    "name": "entries/endpoints/api/read/_server",
+    "src": "src/routes/api/read/+server.js",
+    "isEntry": true
+  },
+  "src/routes/api/save/+server.js": {
+    "file": "entries/endpoints/api/save/_server.js",
+    "name": "entries/endpoints/api/save/_server",
+    "src": "src/routes/api/save/+server.js",
+    "isEntry": true
+  },
+  "src/routes/api/term/exec/+server.js": {
+    "file": "entries/endpoints/api/term/exec/_server.js",
+    "name": "entries/endpoints/api/term/exec/_server",
+    "src": "src/routes/api/term/exec/+server.js",
+    "isEntry": true
   }
 }

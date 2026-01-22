@@ -1,13 +1,16 @@
-/target
-/nexus_venv
-/onnxruntime.zip
-/libonnxruntime.so
-/nexus_prime.tar.gz
-/nexus-duet-native-backup*
-*.log
-*.so
-*.d
-*.o
-node_modules
+# SENSITIVE DATA (LOCAL ONLY)
 .env
-.env_nexus
+*.log
+agents/*/monitor.log
+
+# TELEMETRY (PRIVATE HARDWARE DATA)
+agents/dev_01/stats.csv
+agents/dev_01/system_stats
+
+# BUILD ARTIFACTS
+node_modules/
+.svelte-kit/
+build/
+dist/
+*.class
+target/

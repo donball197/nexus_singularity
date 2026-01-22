@@ -2,5 +2,20 @@
 	"/": [
 		"src/routes/+layout.ts",
 		"src/routes/+layout.ts"
+	],
+	"/api/ask": [
+		"src/routes/api/ask/+server.js"
+	],
+	"/api/files": [
+		"src/routes/api/files/+server.js"
+	],
+	"/api/read": [
+		"src/routes/api/read/+server.js"
+	],
+	"/api/save": [
+		"src/routes/api/save/+server.js"
+	],
+	"/api/term/exec": [
+		"src/routes/api/term/exec/+server.js"
 	]
 }

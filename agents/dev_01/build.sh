@@ -1,0 +1,1 @@
+rustc cpu_mon.rs
