@@ -2,7 +2,7 @@
   "name": "nexus_singularity",
   "version": "0.1.0",
   "description": "",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
