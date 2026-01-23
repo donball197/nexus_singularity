@@ -1,0 +1,26 @@
+=====================================================
+          NEXUS SINGULARITY : COMMAND MANUAL
+=====================================================
+
+[ NAVIGATION ]
+  nx              : Return to Nexus root & Refresh Dashboard.
+  nxt             : Real-time hardware pulse monitor.
+
+[ CORE PROTOCOLS ]
+  ACTION: SPAWN <name>          - Initialize a new agent sanctuary.
+  ACTION: WRITE <agt> <f> <txt> - Commit logic to an agent.
+  ACTION: READ <agt> <f>        - View agent file contents.
+  ACTION: EXEC <agt> <f>        - Run agent logic (via agent_exec.sh).
+  ACTION: BASH <cmd>            - Execute global OS command.
+
+[ AGENT DIRECTORY ]
+  ~/nexus_singularity/agents/
+  ├── dev_01/           (Hardware Telemetry)
+  ├── data_viz/         (Dashboard Logic)
+  └── memory_manager/   (Neural Archiving)
+
+[ SYSTEM FILES ]
+  .env                  - API Key (DO NOT EDIT MANUALLY)
+  .gitignore            - Privacy Mask
+  refresh_dashboard.sh  - Dashboard Logic
+=====================================================
