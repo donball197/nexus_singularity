@@ -14,3 +14,8 @@ build/
 dist/
 *.class
 target/
+.nexus_secrets
+.env
+node_modules/
+target/
+*.log
