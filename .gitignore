@@ -1,23 +1,6 @@
-# SENSITIVE DATA (LOCAL ONLY)
+/target
+/debug
+*.so
+*.o
 .env
-*.log
-agents/*/monitor.log
-
-# TELEMETRY (PRIVATE HARDWARE DATA)
-agents/dev_01/stats.csv
-agents/dev_01/system_stats
-
-# BUILD ARTIFACTS
-node_modules/
-.svelte-kit/
-build/
-dist/
-*.class
-target/
-.nexus_secrets
-.env
-node_modules/
-target/
-*.log
-models/*
-target/
+Cargo.lock
