@@ -1,17 +1,9 @@
-mod heartbeat_beacon;
-mod routes;
-use axum::{routing::get_service, Router};
-use tower_http::services::ServeDir;
-#[tokio::main]
-async fn main() {
-    println!(">> [NEXUS] BOOTING v0.5.1");
-    std::thread::spawn(|| { heartbeat_beacon::start_beacon(); });
-    let app = Router::new()
-        .nest("/api/files", routes::files::router())
-        .nest("/api/term", routes::terminal::router())
-        .nest("/api/ai", routes::ai::router())
-        .nest_service("/", get_service(ServeDir::new("./dist")));
-    let addr = std::net::SocketAddr::from(([0, 0, 0, 0], 8080));
-    let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
-    axum::serve(listener, app).await.unwrap();
+fn main() {
+    println!("--- [LAZARUS OS] ---");
+    println!(">> SYSTEM INITIALIZED: 528Hz PHASE-LOCK ACTIVE.");
+    println!(">> MODE: SOVEREIGN APP INTERFACE.");
+    println!("--------------------");
+    
+    // This is the placeholder where your Slint UI and Prompt Logic will live
+    println!(">> READY FOR PROMPTS. CONNECTING TO HIVE...");
 }
