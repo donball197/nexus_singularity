@@ -19,3 +19,5 @@ target/
 node_modules/
 target/
 *.log
+models/*
+target/
