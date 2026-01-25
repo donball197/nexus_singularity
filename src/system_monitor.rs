@@ -1,17 +1,30 @@
-use sysinfo::{System, SystemExt, CpuExt};
+use sysinfo::System;
 
-pub struct Vitals {
-    pub cpu: f32,
-    pub ram: f32,
+pub struct NexusMonitor {
+    pub sys: System,
 }
 
-pub fn get_vitals(sys: &mut System) -> Vitals {
-    sys.refresh_all();
-    let cpu = sys.global_cpu_info().cpu_usage();
-    let ram = (sys.used_memory() as f32 / sys.total_memory() as f32) * 100.0;
-    Vitals { cpu, ram }
+impl NexusMonitor {
+    pub fn new() -> Self {
+        let mut sys = System::new_all();
+        sys.refresh_all();
+        Self { sys }
+    }
+
+    pub fn get_vitals(&mut self) -> String {
+        self.sys.refresh_cpu_usage();
+        self.sys.refresh_memory();
+        
+        let cpus = self.sys.cpus();
+        let cpu_use: f32 = cpus.iter().map(|cpu| cpu.cpu_usage()).sum::<f32>() / cpus.len() as f32;
+        let mem_use = self.sys.used_memory() as f32 / self.sys.total_memory() as f32 * 100.0;
+        
+        format!("CPU: {:.1}% | RAM: {:.1}%", cpu_use, mem_use)
+    }
 }
 
-pub fn format_telemetry(vitals: Vitals) -> String {
-    format!("[SYS]|{:.1}|{:.1}", vitals.cpu, vitals.ram)
+// Bridging the call from main.rs
+pub fn start_monitor() {
+    let mut monitor = NexusMonitor::new();
+    println!("[SYSTEM] Monitor seated: {}", monitor.get_vitals());
 }

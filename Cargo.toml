@@ -1,21 +1,25 @@
 [package]
 name = "nexus_singularity"
-version = "0.3.9"
+version = "0.2.2"
 edition = "2021"
-default-run = "nexus_sh"
-
-[[bin]]
-name = "nexus_sh"
-path = "src/nexus_sh.rs"
-
-[[bin]]
-name = "nexus_bridge"
-path = "src/nexus_bridge.rs"
 
 [dependencies]
+# --- Infrastructure ---
+sled = "0.34"
 tokio = { version = "1", features = ["full"] }
-reqwest = { version = "0.11", features = ["json"] }
+axum = "0.6"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-dotenvy = "0.15"
-once_cell = "1.18"
+anyhow = "1.0"
+memmap2 = "0.9"
+sysinfo = "0.30"  # Locked for stable API
+
+# --- AI & Neural ---
+candle-core = "0.8.4"
+candle-transformers = "0.8.4"
+candle-nn = "0.8.4"
+tokenizers = "0.21.4"
+
+# --- TUI & Display ---
+ratatui = "0.29.0"
+crossterm = "0.27.0"

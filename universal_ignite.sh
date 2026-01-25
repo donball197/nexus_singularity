@@ -1,24 +1,15 @@
 #!/bin/bash
-if [ -d "/data/data/com.termux" ]; then
-    ENV="MOTOROLA_TERMUX"
-    export LD_LIBRARY_PATH=$HOME/nexus_singularity/lib:$LD_LIBRARY_PATH
-else
-    ENV="DUET_DEBIAN"
-    export LD_LIBRARY_PATH=$HOME/nexus_singularity/lib:/usr/local/lib:$LD_LIBRARY_PATH
-fi
+# NEXUS SINGULARITY v0.2.2 - ENVIRONMENT ALIGNMENT
+echo "RESONANCE CHECK: Aligning Infrastructure..."
 
-echo -e "\x1b[1;35m[IGNITE]\x1b[0m Detected Node: $ENV"
+# Ensure binary vault exists
+mkdir -p logs/nexus_vault
 
-# Stage 1: Kernel
-./target/release/nexus_bridge & 
-BRIDGE_PID=$!
-sleep 2
+# Clean old artifacts for Zero Fragmentation
+rm -rf target/*.so
+rm -rf logs/nexus_vault/*.lock
 
-# Stage 2: Swarm Seating
-echo -e "\x1b[1;32m[BOOT]\x1b[0m Seating 68 Agents in RAM..."
-sleep 4
+# Build the unified engine
+cargo build --release
 
-# Stage 3: Shell
-./target/release/nexus_sh
-
-kill $BRIDGE_PID
+echo "ALIGNMENT COMPLETE. Run './target/release/nexus_singularity' to engage."
