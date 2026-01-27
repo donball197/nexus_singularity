@@ -1,0 +1,38 @@
+{
+  "productName": "NexusTerminal",
+  "version": "0.2.2",
+  "identifier": "com.nexus.singularity.terminal",
+  "build": {
+    "beforeDevCommand": "",
+    "beforeBuildCommand": "",
+    "devUrl": "http://localhost:3000",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Nexus Sovereign Terminal",
+        "width": 800,
+        "height": 600,
+        "resizable": true,
+        "fullscreen": false
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["deb"],
+    "icon": [],
+    "category": "Utility",
+    "shortDescription": "Sovereign AI Conductor Terminal",
+    "longDescription": "A high-precision ARM64 terminal with integrated Zircon 528Hz hardware locking.",
+    "linux": {
+      "deb": {
+        "depends": []
+      }
+    }
+  }
+}

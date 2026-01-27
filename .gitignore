@@ -1,7 +1,14 @@
-/target
-/debug
+# Build Artifacts
+target/
+node_modules/
+.svelte-kit/
+dist/
+*.rlib
+*.rmeta
+*.d
 *.so
 *.o
-.env
-Cargo.lock
-.env
+
+# System & Temp
+.DS_Store
+*.tmp

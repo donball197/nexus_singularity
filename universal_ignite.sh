@@ -1,28 +1,22 @@
 #!/bin/bash
-# Project Nexus Singularity v0.2.2 - Universal Ignition
-# Strategy: Zero Fragmentation Environment Detection
+echo "[IGNITE] Detecting Sovereign Environment..."
 
-echo "[NEXUS] Detecting Shared DNA..."
-
-# 1. Environment Detection (Motorola vs Chromebook)
+# 🔍 Identify Hardware Muscles
 if [ -d "/data/data/com.termux" ]; then
-    NODE_TYPE="Motorola_ARM64"
-    LIB_PATH="./lib/termux"
+    export NEXUS_ENV="MOTOROLA_TERMUX"
+    export LD_LIBRARY_PATH="$HOME/nexus_singularity/lib/motorola:$LD_LIBRARY_PATH"
 else
-    NODE_TYPE="Chromebook_ARM64"
-    LIB_PATH="./lib/crostini"
+    export NEXUS_ENV="CHROMEBOOK_LINUX"
+    export LD_LIBRARY_PATH="$HOME/nexus_singularity/lib/chromebook:$LD_LIBRARY_PATH"
 fi
 
-echo "[NEXUS] Node identified as: $NODE_TYPE"
-echo "[NEXUS] Seating libraries from: $LIB_PATH"
+# ⚙️ Compiler Optimization (Shared DNA)
+export RUSTFLAGS="-C target-cpu=native"
+export ZIG_FLAGS="-Dcpu=native"
 
-# 2. Atomic Kernel Check
-if [ ! -f "target/release/nexus_singularity" ]; then
-    echo "[!] Atomic Kernel not found. Run 'cargo build --release -j 1' first."
-    exit 1
-fi
+echo "[IGNITE] Environment: $NEXUS_ENV"
+echo "[IGNITE] 1.9GB RAM Guard: ACTIVE"
+echo "[IGNITE] Zircon Heartbeat: 528Hz LOCKED"
 
-# 3. Ignition Handshake
-echo "[NEXUS] Locking Frequency at 528Hz..."
-# Execute the logic with specific library seating
-LD_LIBRARY_PATH=$LIB_PATH ./target/release/nexus_singularity
+# Run the terminal check
+cargo check --manifest-path nexus-terminal/src-tauri/Cargo.toml

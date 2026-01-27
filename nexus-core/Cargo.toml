@@ -1,0 +1,10 @@
+[package]
+name = "nexus-core"
+version = "0.2.2"
+edition = "2021"
+
+[lib]
+path = "lib.rs"
+
+[dependencies]
+# Standard timing and sync dependencies

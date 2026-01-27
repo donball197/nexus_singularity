@@ -27,10 +27,8 @@
  */
 declare module '$env/static/private' {
 	export const GEMINI_API_KEY: string;
-	export const NEXUS_MODE: string;
-	export const MODEL_ID: string;
-	export const HOST: string;
-	export const PORT: string;
+	export const PROJECT_NAME: string;
+	export const RESONANCE_FREQ: string;
 	export const USER: string;
 	export const npm_config_user_agent: string;
 	export const XDG_SESSION_TYPE: string;
@@ -42,7 +40,6 @@ declare module '$env/static/private' {
 	export const XCURSOR_SIZE_LOW_DENSITY: string;
 	export const SOMMELIER_VERSION: string;
 	export const HOME: string;
-	export const OLDPWD: string;
 	export const npm_package_json: string;
 	export const PS1: string;
 	export const MANAGERPID: string;
@@ -55,6 +52,7 @@ declare module '$env/static/private' {
 	export const npm_config_metrics_registry: string;
 	export const QT_QPA_PLATFORMTHEME: string;
 	export const WAYLAND_DISPLAY: string;
+	export const PODMAN_IGNORE_CGROUPSV1_WARNING: string;
 	export const GTK_IM_MODULE: string;
 	export const LOGNAME: string;
 	export const WAYLAND_DISPLAY_LOW_DENSITY: string;
@@ -127,10 +125,8 @@ declare module '$env/static/public' {
 declare module '$env/dynamic/private' {
 	export const env: {
 		GEMINI_API_KEY: string;
-		NEXUS_MODE: string;
-		MODEL_ID: string;
-		HOST: string;
-		PORT: string;
+		PROJECT_NAME: string;
+		RESONANCE_FREQ: string;
 		USER: string;
 		npm_config_user_agent: string;
 		XDG_SESSION_TYPE: string;
@@ -142,7 +138,6 @@ declare module '$env/dynamic/private' {
 		XCURSOR_SIZE_LOW_DENSITY: string;
 		SOMMELIER_VERSION: string;
 		HOME: string;
-		OLDPWD: string;
 		npm_package_json: string;
 		PS1: string;
 		MANAGERPID: string;
@@ -155,6 +150,7 @@ declare module '$env/dynamic/private' {
 		npm_config_metrics_registry: string;
 		QT_QPA_PLATFORMTHEME: string;
 		WAYLAND_DISPLAY: string;
+		PODMAN_IGNORE_CGROUPSV1_WARNING: string;
 		GTK_IM_MODULE: string;
 		LOGNAME: string;
 		WAYLAND_DISPLAY_LOW_DENSITY: string;

@@ -1,25 +1,9 @@
-[package]
-name = "nexus_singularity"
-version = "0.2.2"
-edition = "2021"
+[workspace]
+members = [
+    "nexus-core",
+    "nexus-terminal/src-tauri",
+]
+resolver = "2"
 
-[dependencies]
-# --- Infrastructure ---
-sled = "0.34"
-tokio = { version = "1", features = ["full"] }
-axum = "0.6"
-serde = { version = "1.0", features = ["derive"] }
-serde_json = "1.0"
-anyhow = "1.0"
-memmap2 = "0.9"
-sysinfo = "0.30"  # Locked for stable API
-
-# --- AI & Neural ---
-candle-core = "0.8.4"
-candle-transformers = "0.8.4"
-candle-nn = "0.8.4"
-tokenizers = "0.21.4"
-
-# --- TUI & Display ---
-ratatui = "0.29.0"
-crossterm = "0.27.0"
+[workspace.dependencies]
+nexus-core = { path = "./nexus-core" }
